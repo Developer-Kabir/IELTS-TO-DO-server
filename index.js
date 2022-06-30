@@ -11,23 +11,17 @@ app.use(cors());
 
 const port = process.env.PORT || 5000;
 
-app.get('/', (req, res) => {
-    res.send("Server is READY!");
-})
 
 
-app.listen(port, () => {
-    console.log("Listening on port ", port)
-})
 
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.jm3vd.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hkeao.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run() {
     try {
         await client.connect();
-        const noteCollection = client.db('TO-DO-ielts').collection('notes');
+        const noteCollection = client.db('To-DO-ielts').collection('notes');
 
         app.post('/notes', async (req, res) => {
             const notes = req.body;
@@ -72,3 +66,12 @@ async function run() {
 }
 
 run().catch(console.dir);
+
+app.get('/', (req, res) => {
+    res.send("Server is READY!");
+})
+
+
+app.listen(port, () => {
+    console.log("Listening on port ", port)
+})
